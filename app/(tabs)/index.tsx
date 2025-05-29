@@ -21,9 +21,6 @@ const RECENT_RESULTS = [
 ];
 
 export default function HomeScreen() {
-  const handleSignUp = () => {
-    Alert.alert('Sign Up', 'Sign up flow coming soon!');
-  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -43,21 +40,12 @@ export default function HomeScreen() {
             ))}
           </ScrollView>
 
-          {/* Join Us Section */}
-          <ThemedText type="subtitle" style={styles.sectionTitle}>Join Us</ThemedText>
-          <ThemedView style={styles.joinBox}>
-            <TouchableOpacity style={styles.joinButton} onPress={handleSignUp}>
-              <ThemedText type="defaultSemiBold" style={styles.joinButtonText}>Sign Up for Tournament</ThemedText>
-            </TouchableOpacity>
-          </ThemedView>
-
           {/* Recent Results */}
           <ThemedText type="subtitle" style={styles.sectionTitle}>Recent Results</ThemedText>
           <ThemedView style={styles.resultsBox}>
             <ScrollView style={styles.resultsScroll} showsVerticalScrollIndicator={true}>
               {RECENT_RESULTS.map((r, idx) => (
-                <React.Fragment key={idx}>
-                  <View style={styles.resultRow}>
+                  <View key={idx} style={styles.resultRow}>
                     <ThemedText type="defaultSemiBold" style={styles.tournamentName}>{r.tournament}</ThemedText>
                     <View style={styles.champRow}>
                       <ThemedText type="default" style={styles.champ}>🏆 {r.champ}</ThemedText>
@@ -66,8 +54,6 @@ export default function HomeScreen() {
                       <ThemedText type="default" style={styles.runnerUp}>2nd: {r.runnerUp}</ThemedText>
                     </View>
                   </View>
-                  {idx < RECENT_RESULTS.length - 1 && <View style={styles.resultDivider} />}
-                </React.Fragment>
               ))}
             </ScrollView>
           </ThemedView>
@@ -80,32 +66,60 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: 'transparent' },
   scrollContainer: { flexGrow: 1 },
-  container: { flex: 1, paddingHorizontal: 12, paddingVertical: 20, backgroundColor: 'transparent' },
-  header: { fontSize: 32, fontWeight: 'bold', marginBottom: 16 },
-  sectionTitle: { fontSize: 20, fontWeight: 'bold', marginTop: 16, marginBottom: 12 },
-  tournamentsScroll: { marginBottom: 8 },
-  tournamentsRow: { flexDirection: 'row', gap: 12, paddingHorizontal: 2 },
+  container: {
+    flex: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 20,
+    backgroundColor: 'transparent'
+  },
+  header: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 16
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 16,
+    marginBottom: 12
+  },
+  tournamentsScroll: {
+    marginBottom: 8,
+    maxHeight: 120
+  },
+  tournamentsRow: {
+    flexDirection: 'row',
+    gap: 12,
+    paddingHorizontal: 2
+  },
   tournamentCard: { 
     borderRadius: 10, 
     padding: 8, 
     marginRight: 8, 
     alignItems: 'center', 
     justifyContent: 'center',
-    minWidth: 150,
-    height: 115,
+    minWidth: 200,
+    height: 120,
   },
-  tournamentDate: { fontSize: 16, marginBottom: 4, textAlign: 'center' },
-  tournamentName: { fontSize: 16, fontWeight: 'bold', marginBottom: 2, textAlign: 'center' },
-  tournamentLocation: { fontSize: 14, opacity: 0.7, textAlign: 'center' },
-  joinBox: { 
-    borderRadius: 10, 
-    padding: 24, 
-    alignItems: 'center', 
-    marginBottom: 8,
+  tournamentDate: {
+    fontSize: 16,
+    marginBottom: 4,
+    textAlign: 'center'
   },
-  joinButton: { backgroundColor: '#1877f3', borderRadius: 6, paddingVertical: 10, paddingHorizontal: 32, borderWidth: 0 },
-  joinButtonText: { color: '#fff', fontSize: 18 },
-  resultsScroll: { maxHeight: 220, marginTop: 8 },
+  tournamentName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 2,
+    textAlign: 'center'
+  },
+  tournamentLocation: {
+    fontSize: 14,
+    opacity: 0.7,
+    textAlign: 'center'
+  },
+  resultsScroll: {
+    flex: 1,
+  },
   resultsBox: { 
     paddingBottom: 8,
     borderRadius: 10,
@@ -115,9 +129,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     alignItems: 'flex-start',
   },
-  champRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 2, width: '100%' },
-  champ: { fontSize: 16, fontWeight: 'bold', textAlign: 'left' },
-  runnerUpRow: { flexDirection: 'row', alignItems: 'center', width: '100%' },
-  runnerUp: { fontSize: 15, opacity: 0.7, textAlign: 'left' },
-  resultDivider: { height: 1, backgroundColor: '#e0e0e0', marginVertical: 2, width: '100%' },
+  champRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 2,
+    width: '100%'
+  },
+  champ: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'left'
+  },
+  runnerUpRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%'
+  },
+  runnerUp: {
+    fontSize: 15,
+    opacity: 0.7,
+    textAlign: 'left'
+  }
 });
