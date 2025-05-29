@@ -12,6 +12,14 @@ const USER = {
   tournaments: [
     { id: 1, name: 'Tournament A', date: 'Sep 20' },
     { id: 2, name: 'Tournament B', date: 'Aug 10' },
+    { id: 3, name: 'Tournament C', date: 'Aug 10' },
+    { id: 4, name: 'Tournament D', date: 'Aug 10' },
+    { id: 5, name: 'Tournament E', date: 'Aug 10' },
+    { id: 6, name: 'Tournament F', date: 'Aug 10' },
+    { id: 7, name: 'Tournament G', date: 'Aug 10' },
+    { id: 8, name: 'Tournament H', date: 'Aug 10' },
+    { id: 9, name: 'Tournament I', date: 'Aug 10' },
+    { id: 10, name: 'Tournament J', date: 'Aug 10' },
   ],
 };
 
@@ -83,16 +91,36 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: 'transparent' },
-  container: { flex: 1, paddingHorizontal: 12, paddingVertical: 20, backgroundColor: 'transparent' },
-  header: { fontSize: 32, fontWeight: 'bold', marginBottom: 16 },
+  safeArea: {
+    flex: 1,
+    backgroundColor: 'transparent'
+  },
+  container: {
+    flex: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 20,
+    backgroundColor: 'transparent'
+  },
+  header: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 16
+  },
   profileCard: { 
     borderRadius: 10, 
     padding: 20, 
     alignItems: 'center',
   },
-  name: { fontSize: 24, fontWeight: 'bold', marginBottom: 8 },
-  email: { fontSize: 16, marginBottom: 16, opacity: 0.7 },
+  name: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 8
+  },
+  email: {
+    fontSize: 16,
+    marginBottom: 16,
+    opacity: 0.7
+  },
   editButton: { 
     backgroundColor: '#1877f3', 
     borderRadius: 6, 
@@ -100,8 +128,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24, 
     borderWidth: 0 
   },
-  editButtonText: { color: '#fff', fontSize: 16 },
-  sectionTitle: { fontSize: 20, fontWeight: 'bold', marginTop: 16, marginBottom: 8, alignSelf: 'flex-start' },
+  editButtonText: {
+    color: '#fff',
+    fontSize: 16
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 16,
+    marginBottom: 8,
+    alignSelf: 'flex-start'
+  },
   tournamentsList: { 
     width: '100%',
     flex: 1,
@@ -111,9 +148,20 @@ const styles = StyleSheet.create({
     padding: 16, 
     marginBottom: 12 
   },
-  tournamentName: { fontSize: 16, fontWeight: 'bold' },
-  tournamentDate: { fontSize: 14, color: '#888' },
-  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.3)', justifyContent: 'center', alignItems: 'center' },
+  tournamentName: {
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  tournamentDate: {
+    fontSize: 14,
+    color: '#888'
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   modalContent: { 
     borderRadius: 12, 
     padding: 24, 
@@ -129,7 +177,21 @@ const styles = StyleSheet.create({
     marginBottom: 16, 
     fontSize: 16,
   },
-  modalButtons: { flexDirection: 'row', justifyContent: 'space-between', width: '100%' },
-  modalButton: { flex: 1, backgroundColor: '#1877f3', borderRadius: 6, paddingVertical: 10, marginHorizontal: 4, alignItems: 'center' },
-  modalButtonText: { color: '#fff', fontSize: 16 },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%'
+  },
+  modalButton: {
+    flex: 1,
+    backgroundColor: '#1877f3',
+    borderRadius: 6,
+    paddingVertical: 10,
+    marginHorizontal: 4,
+    alignItems: 'center'
+  },
+  modalButtonText: {
+    color: '#fff',
+    fontSize: 16
+  },
 }); 
