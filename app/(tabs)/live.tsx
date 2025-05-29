@@ -1,7 +1,8 @@
 import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
 import { Picker } from '@react-native-picker/picker';
 import React, { useState } from 'react';
-import { Alert, Linking, Modal, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Linking, Modal, ScrollView, StyleSheet, TextInput, TouchableOpacity, View, useColorScheme } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const MOCK_LIVE = [
@@ -53,6 +54,7 @@ export default function LiveScreen() {
   const [player1, setPlayer1] = useState('');
   const [player2, setPlayer2] = useState('');
   const [currentLive, setCurrentLive] = useState(MOCK_LIVE[0]);
+  const colorScheme = useColorScheme();
 
   const handleCreateLive = () => {
     if (!liveUrl.startsWith('http')) {
@@ -92,20 +94,19 @@ export default function LiveScreen() {
         {/* Current Live Event */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.liveScroll} contentContainerStyle={styles.liveRow}>
           {MOCK_LIVE.map((live) => (
-            <View key={live.id} style={styles.liveCard}>
+            <ThemedView key={live.id} style={styles.liveCard}>
               <ThemedText type="subtitle" style={styles.liveTitle}>{live.tournament}</ThemedText>
               <ThemedText type="default" style={styles.liveMatch}>{live.match}</ThemedText>
               <ThemedText type="default" style={styles.liveDate}>{live.date}</ThemedText>
               <View style={styles.liveLabel}>
                 <ThemedText type="defaultSemiBold" style={styles.liveLabelText}>LIVE</ThemedText>
               </View>
-            </View>
+            </ThemedView>
           ))}
         </ScrollView>
-        <View style={styles.sectionDivider} />
         {/* Past Live Events */}
         <ThemedText type="subtitle" style={styles.sectionTitle}>Past Live Events</ThemedText>
-        <View style={styles.pastEventsWrapper}>
+        <ThemedView style={styles.pastEventsWrapper}>
           <ScrollView 
             style={styles.pastEventsScroll} 
             showsVerticalScrollIndicator={true}
@@ -114,7 +115,7 @@ export default function LiveScreen() {
           >
             {PAST_EVENTS.map((e, idx) => (
               <React.Fragment key={e.id}>
-                <View style={styles.pastEventCard}>
+                <ThemedView style={styles.pastEventCard}>
                   <View style={styles.pastEventInfo}>
                     <ThemedText type="defaultSemiBold" style={styles.pastEventTitle}>{e.tournament}</ThemedText>
                     <ThemedText type="default" style={styles.pastEventMatch}>{e.match}</ThemedText>
@@ -122,16 +123,15 @@ export default function LiveScreen() {
                   <TouchableOpacity style={styles.pastEventButton} onPress={() => Linking.openURL(e.url)}>
                     <ThemedText type="defaultSemiBold" style={styles.pastEventButtonText}>Watch</ThemedText>
                   </TouchableOpacity>
-                </View>
-                {idx < PAST_EVENTS.length - 1 && <View style={styles.divider} />}
+                </ThemedView>
               </React.Fragment>
             ))}
           </ScrollView>
-        </View>
+        </ThemedView>
         {/* Modal for creating live session */}
         <Modal visible={modalVisible} transparent animationType="slide">
           <View style={styles.modalOverlay}>
-            <View style={styles.modalContent}>
+            <ThemedView style={styles.modalContent}>
               <ThemedText type="title" style={{ marginBottom: 12 }}>Create Live Session</ThemedText>
               <Picker
                 selectedValue={selectedTournament}
@@ -143,24 +143,27 @@ export default function LiveScreen() {
                 ))}
               </Picker>
               <TextInput
-                style={styles.input}
+                style={[styles.input, { color: colorScheme === 'dark' ? '#fff' : '#000' }]}
                 placeholder="Player 1 Name"
                 value={player1}
                 onChangeText={setPlayer1}
+                placeholderTextColor="#888"
               />
               <TextInput
-                style={styles.input}
+                style={[styles.input, { color: colorScheme === 'dark' ? '#fff' : '#000' }]}
                 placeholder="Player 2 Name"
                 value={player2}
                 onChangeText={setPlayer2}
+                placeholderTextColor="#888"
               />
               <TextInput
-                style={styles.input}
+                style={[styles.input, { color: colorScheme === 'dark' ? '#fff' : '#000' }]}
                 placeholder="Enter Facebook Live URL"
                 value={liveUrl}
                 onChangeText={setLiveUrl}
                 autoCapitalize="none"
                 autoCorrect={false}
+                placeholderTextColor="#888"
               />
               <View style={styles.modalButtons}>
                 <TouchableOpacity style={[styles.modalButton, !isFormValid && styles.modalButtonDisabled]} onPress={handleCreateLive} disabled={!isFormValid}>
@@ -170,7 +173,7 @@ export default function LiveScreen() {
                   <ThemedText type="defaultSemiBold" style={styles.modalButtonText}>Cancel</ThemedText>
                 </TouchableOpacity>
               </View>
-            </View>
+            </ThemedView>
           </View>
         </Modal>
       </View>
@@ -180,33 +183,22 @@ export default function LiveScreen() {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: 'transparent' },
-  container: { flex: 1, padding: 20, backgroundColor: 'transparent' },
+  container: { flex: 1, paddingHorizontal: 12, paddingVertical: 20, backgroundColor: 'transparent' },
   headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 },
   header: { fontSize: 28, fontWeight: 'bold', textAlign: 'left' },
   liveScroll: { marginBottom: 0 },
   liveRow: { flexDirection: 'row', gap: 12, paddingHorizontal: 2 },
   liveCard: { 
-    backgroundColor: '#f2f2f2', 
     borderRadius: 12, 
     padding: 20, 
     marginRight: 12, 
     minWidth: 200,
     height: 180,
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
   },
   liveTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 8 },
   liveMatch: { fontSize: 16, marginBottom: 4 },
-  liveDate: { fontSize: 14, color: '#888', marginBottom: 12 },
+  liveDate: { fontSize: 14, opacity: 0.7, marginBottom: 12 },
   liveLabel: {
     backgroundColor: '#D7263D',
     paddingVertical: 4,
@@ -219,34 +211,41 @@ const styles = StyleSheet.create({
   },
   createButton: { backgroundColor: '#1877f3', borderRadius: 6, paddingVertical: 8, paddingHorizontal: 12, borderWidth: 0, marginLeft: 8 },
   createButtonText: { color: '#fff', fontSize: 15 },
-  sectionTitle: { 
-    fontSize: 20, 
-    fontWeight: 'bold', 
-    marginBottom: 16, 
-    textAlign: 'left', 
-    alignSelf: 'flex-start' 
+  sectionTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 16, textAlign: 'left', alignSelf: 'flex-start' },
+  pastEventCard: { 
+    borderRadius: 10, 
+    padding: 16, 
+    marginBottom: 12, 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'space-between',
   },
-  pastEventCard: { backgroundColor: '#f2f2f2', borderRadius: 10, padding: 16, marginBottom: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   pastEventInfo: { flex: 1 },
   pastEventTitle: { fontSize: 16, fontWeight: 'bold' },
   pastEventMatch: { fontSize: 15 },
   pastEventButton: { backgroundColor: '#D7263D', borderRadius: 6, paddingVertical: 8, paddingHorizontal: 24, alignSelf: 'flex-end' },
   pastEventButtonText: { color: '#fff', fontSize: 15 },
-  divider: { height: 1, backgroundColor: '#e0e0e0', marginVertical: 4 },
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.3)', justifyContent: 'center', alignItems: 'center' },
-  modalContent: { backgroundColor: '#fff', borderRadius: 12, padding: 24, width: '85%', alignItems: 'center' },
-  input: { width: '100%', borderWidth: 1, borderColor: '#ccc', borderRadius: 6, padding: 10, marginBottom: 16, fontSize: 16 },
+  modalContent: { 
+    borderRadius: 12, 
+    padding: 24, 
+    width: '85%', 
+    alignItems: 'center',
+  },
+  input: { 
+    width: '100%', 
+    borderWidth: 1, 
+    borderColor: '#e0e0e0', 
+    borderRadius: 6, 
+    padding: 10, 
+    marginBottom: 16, 
+    fontSize: 16,
+  },
   modalButtons: { flexDirection: 'row', justifyContent: 'space-between', width: '100%' },
   modalButton: { flex: 1, backgroundColor: '#1877f3', borderRadius: 6, paddingVertical: 10, marginHorizontal: 4, alignItems: 'center' },
   modalButtonText: { color: '#fff', fontSize: 16 },
   modalButtonDisabled: { opacity: 0.5 },
   picker: { width: '100%', marginBottom: 12 },
-  sectionDivider: { 
-    height: 1, 
-    backgroundColor: '#e0e0e0', 
-    marginBottom: 16,
-    width: '100%' 
-  },
   pastEventsWrapper: {
     flex: 1,
     marginBottom: 0,
