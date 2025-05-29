@@ -1,0 +1,61 @@
+{
+  "upcomingTournaments": [
+    {
+      "id": 1,
+      "date": "Jun 10–12",
+      "name": "Tournament A",
+      "location": "State X"
+    },
+    {
+      "id": 2,
+      "date": "Jun 10–12",
+      "name": "Tournament B",
+      "location": "State X"
+    },
+    {
+      "id": 3,
+      "date": "Jun 15–17",
+      "name": "Tournament C",
+      "location": "State Y"
+    },
+    {
+      "id": 4,
+      "date": "Jun 20–22",
+      "name": "Tournament D",
+      "location": "State Z"
+    },
+    {
+      "id": 5,
+      "date": "Jun 25–27",
+      "name": "Tournament E",
+      "location": "State W"
+    }
+  ],
+  "recentResults": [
+    {
+      "tournament": "Tournament A",
+      "champ": "Player A",
+      "runnerUp": "Player B"
+    },
+    {
+      "tournament": "Tournament B",
+      "champ": "Player C",
+      "runnerUp": "Player D"
+    },
+    {
+      "tournament": "Tournament C",
+      "champ": "Player E",
+      "runnerUp": "Player F"
+    },
+    {
+      "tournament": "Tournament D",
+      "champ": "Player G",
+      "runnerUp": "Player H"
+    },
+    {
+      "tournament": "Tournament E",
+      "champ": "Player I",
+      "runnerUp": "Player J"
+    }
+  ]
+} 

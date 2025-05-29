@@ -1,36 +1,69 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, ScrollView, StyleSheet, TextInput, TouchableOpacity, View, useColorScheme } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import profileMockData from '../data/profileMockData.json';
 
-const USER = {
-  firstName: 'John',
-  lastName: 'Doe',
-  email: 'johndoe@email.com',
-  avatar: require('@/assets/images/icon.png'),
-  tournaments: [
-    { id: 1, name: 'Tournament A', date: 'Sep 20' },
-    { id: 2, name: 'Tournament B', date: 'Aug 10' },
-    { id: 3, name: 'Tournament C', date: 'Aug 10' },
-    { id: 4, name: 'Tournament D', date: 'Aug 10' },
-    { id: 5, name: 'Tournament E', date: 'Aug 10' },
-    { id: 6, name: 'Tournament F', date: 'Aug 10' },
-    { id: 7, name: 'Tournament G', date: 'Aug 10' },
-    { id: 8, name: 'Tournament H', date: 'Aug 10' },
-    { id: 9, name: 'Tournament I', date: 'Aug 10' },
-    { id: 10, name: 'Tournament J', date: 'Aug 10' },
-  ],
-};
+interface Tournament {
+  id: number;
+  name: string;
+  date: string;
+}
+
+interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+  avatar: string;
+  tournaments: Tournament[];
+}
+
+interface ProfileData {
+  user: User;
+}
 
 export default function ProfileScreen() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [firstName, setFirstName] = useState(USER.firstName);
-  const [lastName, setLastName] = useState(USER.lastName);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [data, setData] = useState<ProfileData>({
+    user: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      avatar: '',
+      tournaments: []
+    }
+  });
   const colorScheme = useColorScheme();
+
+  useEffect(() => {
+    // Simulating API fetch
+    const fetchData = async () => {
+      try {
+        // In the future, this will be replaced with a real API call
+        setData(profileMockData as ProfileData);
+        setFirstName(profileMockData.user.firstName);
+        setLastName(profileMockData.user.lastName);
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleSaveProfile = () => {
     // Here you would typically save the changes to your backend
+    setData(prev => ({
+      ...prev,
+      user: {
+        ...prev.user,
+        firstName,
+        lastName
+      }
+    }));
     setModalVisible(false);
   };
 
@@ -39,15 +72,15 @@ export default function ProfileScreen() {
       <View style={styles.container}>
         <ThemedText type="title" style={styles.header}>Profile</ThemedText>
         <ThemedView style={styles.profileCard}>
-          <ThemedText type="subtitle" style={styles.name}>{USER.firstName} {USER.lastName}</ThemedText>
-          <ThemedText type="default" style={styles.email}>{USER.email}</ThemedText>
+          <ThemedText type="subtitle" style={styles.name}>{data.user.firstName} {data.user.lastName}</ThemedText>
+          <ThemedText type="default" style={styles.email}>{data.user.email}</ThemedText>
           <TouchableOpacity style={styles.editButton} onPress={() => setModalVisible(true)}>
             <ThemedText type="defaultSemiBold" style={styles.editButtonText}>Edit Profile</ThemedText>
           </TouchableOpacity>
         </ThemedView>
         <ThemedText type="subtitle" style={styles.sectionTitle}>Tournaments</ThemedText>
         <ScrollView style={styles.tournamentsList} showsVerticalScrollIndicator={true}>
-          {USER.tournaments.map(t => (
+          {data.user.tournaments.map(t => (
             <ThemedView key={t.id} style={styles.tournamentCard}>
               <ThemedText type="defaultSemiBold" style={styles.tournamentName}>{t.name}</ThemedText>
               <ThemedText type="default" style={styles.tournamentDate}>{t.date}</ThemedText>

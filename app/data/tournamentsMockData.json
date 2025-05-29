@@ -1,0 +1,44 @@
+{
+  "tournaments": [
+    {
+      "id": 1,
+      "name": "Tournament A",
+      "date": "Jun 10–12",
+      "location": "Texas",
+      "image": "icon.png",
+      "allowJoin": true
+    },
+    {
+      "id": 2,
+      "name": "Tournament B",
+      "date": "Jul 8–10",
+      "location": "California",
+      "image": "icon.png",
+      "allowJoin": false
+    },
+    {
+      "id": 3,
+      "name": "Tournament C",
+      "date": "Aug 5–7",
+      "location": "Oklahoma",
+      "image": "icon.png",
+      "allowJoin": false
+    },
+    {
+      "id": 4,
+      "name": "Tournament D",
+      "date": "Aug 26–28",
+      "location": "Missouri",
+      "image": "icon.png",
+      "allowJoin": false
+    },
+    {
+      "id": 5,
+      "name": "Tournament E",
+      "date": "Sep 16–18",
+      "location": "Arkansas",
+      "image": "icon.png",
+      "allowJoin": false
+    }
+  ]
+} 

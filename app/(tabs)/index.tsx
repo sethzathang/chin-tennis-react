@@ -1,26 +1,47 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import React from 'react';
-import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import homeMockData from '../data/homeMockData.json';
 
-const UPCOMING_TOURNAMENTS = [
-  { id: 1, date: 'Jun 10–12', name: 'Tournament A', location: 'State X' },
-  { id: 2, date: 'Jun 10–12', name: 'Tournament B', location: 'State X' },
-  { id: 3, date: 'Jun 15–17', name: 'Tournament C', location: 'State Y' },
-  { id: 4, date: 'Jun 20–22', name: 'Tournament D', location: 'State Z' },
-  { id: 5, date: 'Jun 25–27', name: 'Tournament E', location: 'State W' },
-];
+interface Tournament {
+  id: number;
+  date: string;
+  name: string;
+  location: string;
+}
 
-const RECENT_RESULTS = [
-  { tournament: 'Tournament A', champ: 'Player A', runnerUp: 'Player B' },
-  { tournament: 'Tournament B', champ: 'Player C', runnerUp: 'Player D' },
-  { tournament: 'Tournament C', champ: 'Player E', runnerUp: 'Player F' },
-  { tournament: 'Tournament D', champ: 'Player G', runnerUp: 'Player H' },
-  { tournament: 'Tournament E', champ: 'Player I', runnerUp: 'Player J' },
-];
+interface Result {
+  tournament: string;
+  champ: string;
+  runnerUp: string;
+}
+
+interface HomeData {
+  upcomingTournaments: Tournament[];
+  recentResults: Result[];
+}
 
 export default function HomeScreen() {
+  const [data, setData] = useState<HomeData>({
+    upcomingTournaments: [],
+    recentResults: []
+  });
+
+  useEffect(() => {
+    // Simulating API fetch
+    const fetchData = async () => {
+      try {
+        // In the future, this will be replaced with a real API call
+        setData(homeMockData as HomeData);
+      } catch (error) {
+        console.error('Error fetching home data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -31,7 +52,7 @@ export default function HomeScreen() {
           {/* Upcoming Tournaments */}
           <ThemedText type="subtitle" style={styles.sectionTitle}>Upcoming Tournaments</ThemedText>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tournamentsScroll} contentContainerStyle={styles.tournamentsRow}>
-            {UPCOMING_TOURNAMENTS.map(t => (
+            {data.upcomingTournaments.map(t => (
               <ThemedView key={t.id} style={styles.tournamentCard}>
                 <ThemedText type="defaultSemiBold" style={styles.tournamentDate}>{t.date}</ThemedText>
                 <ThemedText type="default" style={styles.tournamentName}>{t.name}</ThemedText>
@@ -44,7 +65,7 @@ export default function HomeScreen() {
           <ThemedText type="subtitle" style={styles.sectionTitle}>Recent Results</ThemedText>
           <ThemedView style={styles.resultsBox}>
             <ScrollView style={styles.resultsScroll} showsVerticalScrollIndicator={true}>
-              {RECENT_RESULTS.map((r, idx) => (
+              {data.recentResults.map((r, idx) => (
                   <View key={idx} style={styles.resultRow}>
                     <ThemedText type="defaultSemiBold" style={styles.tournamentName}>{r.tournament}</ThemedText>
                     <View style={styles.champRow}>

@@ -1,0 +1,60 @@
+{
+  "user": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "johndoe@email.com",
+    "avatar": "icon.png",
+    "tournaments": [
+      {
+        "id": 1,
+        "name": "Tournament A",
+        "date": "Sep 20"
+      },
+      {
+        "id": 2,
+        "name": "Tournament B",
+        "date": "Aug 10"
+      },
+      {
+        "id": 3,
+        "name": "Tournament C",
+        "date": "Aug 10"
+      },
+      {
+        "id": 4,
+        "name": "Tournament D",
+        "date": "Aug 10"
+      },
+      {
+        "id": 5,
+        "name": "Tournament E",
+        "date": "Aug 10"
+      },
+      {
+        "id": 6,
+        "name": "Tournament F",
+        "date": "Aug 10"
+      },
+      {
+        "id": 7,
+        "name": "Tournament G",
+        "date": "Aug 10"
+      },
+      {
+        "id": 8,
+        "name": "Tournament H",
+        "date": "Aug 10"
+      },
+      {
+        "id": 9,
+        "name": "Tournament I",
+        "date": "Aug 10"
+      },
+      {
+        "id": 10,
+        "name": "Tournament J",
+        "date": "Aug 10"
+      }
+    ]
+  }
+} 

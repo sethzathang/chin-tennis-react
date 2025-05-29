@@ -1,18 +1,42 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import tournamentsMockData from '../data/tournamentsMockData.json';
 
-const TOURNAMENTS = [
-  { id: 1, name: 'Tournament A', date: 'Jun 10–12', location: 'Texas', image: require('@/assets/images/icon.png'), allowJoin: true },
-  { id: 2, name: 'Tournament B', date: 'Jul 8–10', location: 'California', image: require('@/assets/images/icon.png'), allowJoin: false },
-  { id: 3, name: 'Tournament C', date: 'Aug 5–7', location: 'Oklahoma', image: require('@/assets/images/icon.png'), allowJoin: false },
-  { id: 4, name: 'Tournament D', date: 'Aug 26–28', location: 'Missouri', image: require('@/assets/images/icon.png'), allowJoin: false },
-  { id: 5, name: 'Tournament E', date: 'Sep 16–18', location: 'Arkansas', image: require('@/assets/images/icon.png'), allowJoin: false },
-];
+interface Tournament {
+  id: number;
+  name: string;
+  date: string;
+  location: string;
+  image: string;
+  allowJoin: boolean;
+}
+
+interface TournamentsData {
+  tournaments: Tournament[];
+}
 
 export default function TournamentsScreen() {
+  const [data, setData] = useState<TournamentsData>({
+    tournaments: []
+  });
+
+  useEffect(() => {
+    // Simulating API fetch
+    const fetchData = async () => {
+      try {
+        // In the future, this will be replaced with a real API call
+        setData(tournamentsMockData as TournamentsData);
+      } catch (error) {
+        console.error('Error fetching tournaments data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleJoin = (tournamentName: string) => {
     Alert.alert('Join Tournament', `Sign up for ${tournamentName} coming soon!`);
   };
@@ -22,8 +46,8 @@ export default function TournamentsScreen() {
       <View style={styles.container}>
         <ThemedText type="title" style={styles.header}>Tournaments</ThemedText>
         <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
-          {TOURNAMENTS.map((t, index) => (
-            <ThemedView key={index} style={styles.card}>
+          {data.tournaments.map((t) => (
+            <ThemedView key={t.id} style={styles.card}>
               <ThemedText type="defaultSemiBold" style={styles.tournamentName}>{t.name}</ThemedText>
               <ThemedText type="default" style={styles.tournamentDate}>{t.date}</ThemedText>
               <ThemedText type="default" style={styles.tournamentLocation}>{t.location}</ThemedText>
