@@ -2,60 +2,73 @@
   "upcomingTournaments": [
     {
       "id": 1,
+      "name": "Summer Slam",
       "date": "Jun 10–12",
-      "name": "Tournament A",
-      "location": "State X"
+      "location": "Texas"
     },
     {
       "id": 2,
-      "date": "Jun 10–12",
-      "name": "Tournament B",
-      "location": "State X"
+      "name": "Coastal Classic",
+      "date": "Jul 8–10",
+      "location": "California"
     },
     {
       "id": 3,
-      "date": "Jun 15–17",
-      "name": "Tournament C",
-      "location": "State Y"
+      "name": "Mountain Masters",
+      "date": "Aug 5–7",
+      "location": "Oklahoma"
+    }
+  ],
+  "tournamentImages": [
+    {
+      "id": 1,
+      "url": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0",
+      "caption": "Championship Match - Summer Slam 2023"
+    },
+    {
+      "id": 2,
+      "url": "https://images.unsplash.com/photo-1622279457486-62f3f759e682",
+      "caption": "Tournament Finals - Coastal Classic"
+    },
+    {
+      "id": 3,
+      "url": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0",
+      "caption": "Semi-Finals Action - Mountain Masters"
     },
     {
       "id": 4,
-      "date": "Jun 20–22",
-      "name": "Tournament D",
-      "location": "State Z"
+      "url": "https://images.unsplash.com/photo-1622279457486-62f3f759e682",
+      "caption": "Tournament Opening Ceremony"
     },
     {
       "id": 5,
-      "date": "Jun 25–27",
-      "name": "Tournament E",
-      "location": "State W"
-    }
-  ],
-  "recentResults": [
-    {
-      "tournament": "Tournament A",
-      "champ": "Player A",
-      "runnerUp": "Player B"
+      "url": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0",
+      "caption": "Quarter Finals - Summer Slam"
     },
     {
-      "tournament": "Tournament B",
-      "champ": "Player C",
-      "runnerUp": "Player D"
+      "id": 6,
+      "url": "https://images.unsplash.com/photo-1622279457486-62f3f759e682",
+      "caption": "Doubles Championship"
     },
     {
-      "tournament": "Tournament C",
-      "champ": "Player E",
-      "runnerUp": "Player F"
+      "id": 7,
+      "url": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0",
+      "caption": "Junior Division Finals"
     },
     {
-      "tournament": "Tournament D",
-      "champ": "Player G",
-      "runnerUp": "Player H"
+      "id": 8,
+      "url": "https://images.unsplash.com/photo-1622279457486-62f3f759e682",
+      "caption": "Mixed Doubles Championship"
     },
     {
-      "tournament": "Tournament E",
-      "champ": "Player I",
-      "runnerUp": "Player J"
+      "id": 9,
+      "url": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0",
+      "caption": "Senior Division Finals"
+    },
+    {
+      "id": 10,
+      "url": "https://images.unsplash.com/photo-1622279457486-62f3f759e682",
+      "caption": "Tournament Awards Ceremony"
     }
   ]
 } 

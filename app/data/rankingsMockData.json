@@ -1,0 +1,164 @@
+{
+  "players": [
+    {
+      "id": 1,
+      "name": "John Smith",
+      "rank": 1,
+      "points": 1500
+    },
+    {
+      "id": 2,
+      "name": "Mike Johnson",
+      "rank": 2,
+      "points": 1450
+    },
+    {
+      "id": 3,
+      "name": "Sarah Williams",
+      "rank": 3,
+      "points": 1400
+    },
+    {
+      "id": 4,
+      "name": "Emma Davis",
+      "rank": 4,
+      "points": 1350
+    },
+    {
+      "id": 5,
+      "name": "David Lee",
+      "rank": 5,
+      "points": 1300
+    },
+    {
+      "id": 6,
+      "name": "Lisa Chen",
+      "rank": 6,
+      "points": 1250
+    },
+    {
+      "id": 7,
+      "name": "Maria Garcia",
+      "rank": 7,
+      "points": 1200
+    },
+    {
+      "id": 8,
+      "name": "Tom Brown",
+      "rank": 8,
+      "points": 1150
+    },
+    {
+      "id": 9,
+      "name": "Chris Miller",
+      "rank": 9,
+      "points": 1100
+    },
+    {
+      "id": 10,
+      "name": "Alex Wilson",
+      "rank": 10,
+      "points": 1050
+    },
+    {
+      "id": 11,
+      "name": "James Taylor",
+      "points": 1000
+    },
+    {
+      "id": 12,
+      "name": "Sophie Anderson",
+      "points": 950
+    },
+    {
+      "id": 13,
+      "name": "Daniel Martinez",
+      "points": 900
+    },
+    {
+      "id": 14,
+      "name": "Olivia White",
+      "points": 850
+    },
+    {
+      "id": 15,
+      "name": "Ryan Thompson",
+      "points": 800
+    },
+    {
+      "id": 16,
+      "name": "Emily Clark",
+      "points": 750
+    },
+    {
+      "id": 17,
+      "name": "Michael Rodriguez",
+      "points": 700
+    },
+    {
+      "id": 18,
+      "name": "Jessica Lewis",
+      "points": 650
+    },
+    {
+      "id": 19,
+      "name": "William Hall",
+      "points": 600
+    },
+    {
+      "id": 20,
+      "name": "Sophia Turner",
+      "points": 550
+    },
+    {
+      "id": 21,
+      "name": "Ethan Parker",
+      "points": 500
+    },
+    {
+      "id": 22,
+      "name": "Isabella Moore",
+      "points": 450
+    },
+    {
+      "id": 23,
+      "name": "Noah Wright",
+      "points": 400
+    },
+    {
+      "id": 24,
+      "name": "Ava King",
+      "points": 350
+    },
+    {
+      "id": 25,
+      "name": "Liam Scott",
+      "points": 300
+    },
+    {
+      "id": 26,
+      "name": "Mia Green",
+      "points": 250
+    },
+    {
+      "id": 27,
+      "name": "Benjamin Adams",
+      "points": 200
+    },
+    {
+      "id": 28,
+      "name": "Charlotte Baker",
+      "points": 150
+    },
+    {
+      "id": 29,
+      "name": "Mason Carter",
+      "points": 100
+    },
+    {
+      "id": 30,
+      "name": "Amelia Phillips",
+      "points": 50
+    }
+  ]
+} 

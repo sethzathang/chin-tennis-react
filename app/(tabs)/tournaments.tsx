@@ -1,5 +1,6 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -19,6 +20,7 @@ interface TournamentsData {
 }
 
 export default function TournamentsScreen() {
+  const router = useRouter();
   const [data, setData] = useState<TournamentsData>({
     tournaments: []
   });
@@ -41,6 +43,13 @@ export default function TournamentsScreen() {
     Alert.alert('Join Tournament', `Sign up for ${tournamentName} coming soon!`);
   };
 
+  const handleViewDetails = (tournamentId: number, tournamentName: string) => {
+    router.push({
+      pathname: '/tournament-details',
+      params: { id: tournamentId, name: tournamentName }
+    });
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -51,11 +60,19 @@ export default function TournamentsScreen() {
               <ThemedText type="defaultSemiBold" style={styles.tournamentName}>{t.name}</ThemedText>
               <ThemedText type="default" style={styles.tournamentDate}>{t.date}</ThemedText>
               <ThemedText type="default" style={styles.tournamentLocation}>{t.location}</ThemedText>
-              {t.allowJoin && (
-                <TouchableOpacity style={styles.joinButton} onPress={() => handleJoin(t.name)}>
-                  <ThemedText type="defaultSemiBold" style={styles.joinButtonText}>Join</ThemedText>
+              <View style={styles.buttonContainer}>
+                {t.allowJoin && (
+                  <TouchableOpacity style={styles.joinButton} onPress={() => handleJoin(t.name)}>
+                    <ThemedText type="defaultSemiBold" style={styles.joinButtonText}>Join</ThemedText>
+                  </TouchableOpacity>
+                )}
+                <TouchableOpacity 
+                  style={styles.detailsButton} 
+                  onPress={() => handleViewDetails(t.id, t.name)}
+                >
+                  <ThemedText type="defaultSemiBold" style={styles.detailsButtonText}>View Details</ThemedText>
                 </TouchableOpacity>
-              )}
+              </View>
             </ThemedView>
           ))}
         </ScrollView>
@@ -77,6 +94,29 @@ const styles = StyleSheet.create({
   tournamentName: { fontSize: 18, fontWeight: 'bold', marginBottom: 4 },
   tournamentDate: { fontSize: 16, marginBottom: 2, opacity: 0.7 },
   tournamentLocation: { fontSize: 14, opacity: 0.7 },
-  joinButton: { marginTop: 12, backgroundColor: '#1877f3', borderRadius: 6, paddingVertical: 10, paddingHorizontal: 16, borderWidth: 0, alignSelf: 'flex-end' },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 12,
+    gap: 8
+  },
+  joinButton: { 
+    backgroundColor: '#1877f3', 
+    borderRadius: 6, 
+    paddingVertical: 10, 
+    paddingHorizontal: 16, 
+    borderWidth: 0
+  },
   joinButtonText: { color: '#fff', fontSize: 16 },
+  detailsButton: {
+    backgroundColor: '#4CAF50',
+    borderRadius: 6,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderWidth: 0
+  },
+  detailsButtonText: {
+    color: '#fff',
+    fontSize: 16
+  }
 }); 

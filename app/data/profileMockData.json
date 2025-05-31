@@ -4,57 +4,30 @@
     "lastName": "Doe",
     "email": "johndoe@email.com",
     "avatar": "icon.png",
-    "tournaments": [
+    "tournamentPoints": [
       {
         "id": 1,
-        "name": "Tournament A",
-        "date": "Sep 20"
+        "tournament": "Summer Slam",
+        "points": 1500,
+        "rank": 1,
+        "date": "Jun 10"
       },
       {
         "id": 2,
-        "name": "Tournament B",
-        "date": "Aug 10"
+        "tournament": "Coastal Classic",
+        "points": 1200,
+        "rank": 3,
+        "date": "Jul 8"
       },
       {
         "id": 3,
-        "name": "Tournament C",
-        "date": "Aug 10"
-      },
-      {
-        "id": 4,
-        "name": "Tournament D",
-        "date": "Aug 10"
-      },
-      {
-        "id": 5,
-        "name": "Tournament E",
-        "date": "Aug 10"
-      },
-      {
-        "id": 6,
-        "name": "Tournament F",
-        "date": "Aug 10"
-      },
-      {
-        "id": 7,
-        "name": "Tournament G",
-        "date": "Aug 10"
-      },
-      {
-        "id": 8,
-        "name": "Tournament H",
-        "date": "Aug 10"
-      },
-      {
-        "id": 9,
-        "name": "Tournament I",
-        "date": "Aug 10"
-      },
-      {
-        "id": 10,
-        "name": "Tournament J",
-        "date": "Aug 10"
+        "tournament": "Mountain Masters",
+        "points": 1000,
+        "rank": 5,
+        "date": "Aug 5"
       }
-    ]
+    ],
+    "totalPoints": 3700,
+    "overallRank": 2
   }
 } 

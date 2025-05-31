@@ -5,9 +5,11 @@ import { Modal, ScrollView, StyleSheet, TextInput, TouchableOpacity, View, useCo
 import { SafeAreaView } from 'react-native-safe-area-context';
 import profileMockData from '../data/profileMockData.json';
 
-interface Tournament {
+interface TournamentPoints {
   id: number;
-  name: string;
+  tournament: string;
+  points: number;
+  rank: number;
   date: string;
 }
 
@@ -16,7 +18,9 @@ interface User {
   lastName: string;
   email: string;
   avatar: string;
-  tournaments: Tournament[];
+  tournamentPoints: TournamentPoints[];
+  totalPoints: number;
+  overallRank: number;
 }
 
 interface ProfileData {
@@ -33,7 +37,9 @@ export default function ProfileScreen() {
       lastName: '',
       email: '',
       avatar: '',
-      tournaments: []
+      tournamentPoints: [],
+      totalPoints: 0,
+      overallRank: 0
     }
   });
   const colorScheme = useColorScheme();
@@ -78,12 +84,32 @@ export default function ProfileScreen() {
             <ThemedText type="defaultSemiBold" style={styles.editButtonText}>Edit Profile</ThemedText>
           </TouchableOpacity>
         </ThemedView>
-        <ThemedText type="subtitle" style={styles.sectionTitle}>Tournaments</ThemedText>
-        <ScrollView style={styles.tournamentsList} showsVerticalScrollIndicator={true}>
-          {data.user.tournaments.map(t => (
-            <ThemedView key={t.id} style={styles.tournamentCard}>
-              <ThemedText type="defaultSemiBold" style={styles.tournamentName}>{t.name}</ThemedText>
-              <ThemedText type="default" style={styles.tournamentDate}>{t.date}</ThemedText>
+
+        {/* Tournament Points Summary */}
+        <ThemedView style={styles.pointsSummaryCard}>
+          <View style={styles.pointsSummaryItem}>
+            <ThemedText type="default" style={styles.pointsLabel}>Total Points</ThemedText>
+            <ThemedText type="title" style={styles.pointsValue}>{data.user.totalPoints}</ThemedText>
+          </View>
+          <View style={styles.pointsSummaryItem}>
+            <ThemedText type="default" style={styles.pointsLabel}>Overall Rank</ThemedText>
+            <ThemedText type="title" style={styles.pointsValue}>#{data.user.overallRank}</ThemedText>
+          </View>
+        </ThemedView>
+
+        {/* Tournament Points History */}
+        <ThemedText type="subtitle" style={styles.sectionTitle}>Tournament Points</ThemedText>
+        <ScrollView style={styles.pointsList} showsVerticalScrollIndicator={true}>
+          {data.user.tournamentPoints.map(point => (
+            <ThemedView key={point.id} style={styles.pointsCard}>
+              <View style={styles.pointsInfo}>
+                <ThemedText type="defaultSemiBold" style={styles.tournamentName}>{point.tournament}</ThemedText>
+                <ThemedText type="default" style={styles.tournamentDate}>{point.date}</ThemedText>
+              </View>
+              <View style={styles.pointsDetails}>
+                <ThemedText type="defaultSemiBold" style={styles.pointsValue}>{point.points} pts</ThemedText>
+                <ThemedText type="default" style={styles.rankText}>Rank #{point.rank}</ThemedText>
+              </View>
             </ThemedView>
           ))}
         </ScrollView>
@@ -165,6 +191,26 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16
   },
+  pointsSummaryCard: {
+    borderRadius: 10,
+    padding: 20,
+    marginTop: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  pointsSummaryItem: {
+    alignItems: 'center'
+  },
+  pointsLabel: {
+    fontSize: 14,
+    opacity: 0.7,
+    marginBottom: 4
+  },
+  pointsValue: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#4CAF50'
+  },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -172,14 +218,20 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     alignSelf: 'flex-start'
   },
-  tournamentsList: { 
+  pointsList: { 
     width: '100%',
     flex: 1,
   },
-  tournamentCard: { 
+  pointsCard: { 
     borderRadius: 10, 
     padding: 16, 
-    marginBottom: 12 
+    marginBottom: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  pointsInfo: {
+    flex: 1
   },
   tournamentName: {
     fontSize: 16,
@@ -187,7 +239,14 @@ const styles = StyleSheet.create({
   },
   tournamentDate: {
     fontSize: 14,
-    color: '#888'
+    opacity: 0.7
+  },
+  pointsDetails: {
+    alignItems: 'flex-end'
+  },
+  rankText: {
+    fontSize: 14,
+    opacity: 0.7
   },
   modalOverlay: {
     flex: 1,

@@ -1,32 +1,30 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import homeMockData from '../data/homeMockData.json';
 
-interface Tournament {
+interface TournamentImage {
   id: number;
-  date: string;
-  name: string;
-  location: string;
-}
-
-interface Result {
-  tournament: string;
-  champ: string;
-  runnerUp: string;
+  url: string;
+  caption: string;
 }
 
 interface HomeData {
-  upcomingTournaments: Tournament[];
-  recentResults: Result[];
+  upcomingTournaments: {
+    id: number;
+    name: string;
+    date: string;
+    location: string;
+  }[];
+  tournamentImages: TournamentImage[];
 }
 
 export default function HomeScreen() {
   const [data, setData] = useState<HomeData>({
     upcomingTournaments: [],
-    recentResults: []
+    tournamentImages: []
   });
 
   useEffect(() => {
@@ -45,48 +43,41 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
-        <ThemedView style={styles.container}>
-          <ThemedText type="title" style={styles.header}>ChinTennis</ThemedText>
+      <View style={styles.container}>
+        <ThemedText type="title" style={styles.header}>Home</ThemedText>
+        
+        {/* Upcoming Tournaments */}
+        <ThemedText type="subtitle" style={styles.sectionTitle}>Upcoming Tournaments</ThemedText>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tournamentsScroll} contentContainerStyle={styles.tournamentsRow}>
+          {data.upcomingTournaments.map((t) => (
+            <ThemedView key={t.id} style={styles.tournamentCard}>
+              <ThemedText type="defaultSemiBold" style={styles.tournamentName}>{t.name}</ThemedText>
+              <ThemedText type="default" style={styles.tournamentDate}>{t.date}</ThemedText>
+              <ThemedText type="default" style={styles.tournamentLocation}>{t.location}</ThemedText>
+            </ThemedView>
+          ))}
+        </ScrollView>
 
-          {/* Upcoming Tournaments */}
-          <ThemedText type="subtitle" style={styles.sectionTitle}>Upcoming Tournaments</ThemedText>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tournamentsScroll} contentContainerStyle={styles.tournamentsRow}>
-            {data.upcomingTournaments.map(t => (
-              <ThemedView key={t.id} style={styles.tournamentCard}>
-                <ThemedText type="defaultSemiBold" style={styles.tournamentDate}>{t.date}</ThemedText>
-                <ThemedText type="default" style={styles.tournamentName}>{t.name}</ThemedText>
-                <ThemedText type="default" style={styles.tournamentLocation}>{t.location}</ThemedText>
-              </ThemedView>
-            ))}
-          </ScrollView>
-
-          {/* Recent Results */}
-          <ThemedText type="subtitle" style={styles.sectionTitle}>Recent Results</ThemedText>
-          <ThemedView style={styles.resultsBox}>
-            <ScrollView style={styles.resultsScroll} showsVerticalScrollIndicator={true}>
-              {data.recentResults.map((r, idx) => (
-                  <View key={idx} style={styles.resultRow}>
-                    <ThemedText type="defaultSemiBold" style={styles.tournamentName}>{r.tournament}</ThemedText>
-                    <View style={styles.champRow}>
-                      <ThemedText type="default" style={styles.champ}>🏆 {r.champ}</ThemedText>
-                    </View>
-                    <View style={styles.runnerUpRow}>
-                      <ThemedText type="default" style={styles.runnerUp}>2nd: {r.runnerUp}</ThemedText>
-                    </View>
-                  </View>
-              ))}
-            </ScrollView>
-          </ThemedView>
-        </ThemedView>
-      </ScrollView>
+        {/* Tournament Images */}
+        <ThemedText type="subtitle" style={styles.sectionTitle}>Tournament Gallery</ThemedText>
+        <ScrollView style={styles.imagesScroll} showsVerticalScrollIndicator={false}>
+          {data.tournamentImages.map((image) => (
+            <ThemedView key={image.id} style={styles.imageCard}>
+              <Image source={{ uri: image.url }} style={styles.tournamentImage} />
+              <ThemedText type="default" style={styles.imageCaption}>{image.caption}</ThemedText>
+            </ThemedView>
+          ))}
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: 'transparent' },
-  scrollContainer: { flexGrow: 1 },
+  safeArea: {
+    flex: 1,
+    backgroundColor: 'transparent'
+  },
   container: {
     flex: 1,
     paddingHorizontal: 12,
@@ -101,12 +92,13 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 16,
-    marginBottom: 12
+    marginVertical: 16,
+    textAlign: 'left',
+    alignSelf: 'flex-start'
   },
   tournamentsScroll: {
-    marginBottom: 8,
-    maxHeight: 120
+    marginBottom: 0,
+    maxHeight: 150
   },
   tournamentsRow: {
     flexDirection: 'row',
@@ -115,60 +107,43 @@ const styles = StyleSheet.create({
   },
   tournamentCard: { 
     borderRadius: 10, 
-    padding: 8, 
-    marginRight: 8, 
-    alignItems: 'center', 
-    justifyContent: 'center',
+    padding: 16, 
+    marginRight: 12, 
     minWidth: 200,
-    height: 120,
+    height: 150,
+    justifyContent: 'center',
+  },
+  tournamentName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8
   },
   tournamentDate: {
     fontSize: 16,
     marginBottom: 4,
-    textAlign: 'center'
-  },
-  tournamentName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 2,
-    textAlign: 'center'
+    opacity: 0.7
   },
   tournamentLocation: {
     fontSize: 14,
-    opacity: 0.7,
-    textAlign: 'center'
+    opacity: 0.7
   },
-  resultsScroll: {
+  imagesScroll: {
     flex: 1,
   },
-  resultsBox: { 
-    paddingBottom: 8,
+  imageCard: {
+    borderRadius: 10,
+    marginBottom: 16,
+    overflow: 'hidden',
+  },
+  tournamentImage: {
+    width: '100%',
+    height: 200,
     borderRadius: 10,
   },
-  resultRow: { 
-    paddingVertical: 10, 
-    paddingHorizontal: 16,
-    alignItems: 'flex-start',
-  },
-  champRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 2,
-    width: '100%'
-  },
-  champ: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'left'
-  },
-  runnerUpRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%'
-  },
-  runnerUp: {
-    fontSize: 15,
+  imageCaption: {
+    fontSize: 14,
+    marginTop: 8,
     opacity: 0.7,
-    textAlign: 'left'
-  }
+    textAlign: 'center',
+  },
 });
