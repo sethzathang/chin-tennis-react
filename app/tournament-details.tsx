@@ -1,8 +1,8 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface Player {
@@ -21,7 +21,6 @@ interface TournamentDetails {
 }
 
 export default function TournamentDetailsScreen() {
-  const router = useRouter();
   const params = useLocalSearchParams();
   const [tournament, setTournament] = useState<TournamentDetails | null>(null);
 
@@ -65,14 +64,14 @@ export default function TournamentDetailsScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <Stack.Screen
+        options={{
+          title: "Tournament Details",
+          headerBackTitle: "Back",
+          headerShown: true
+        }}
+      />
       <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-            <ThemedText type="defaultSemiBold">← Back</ThemedText>
-          </TouchableOpacity>
-          <ThemedText type="title" style={styles.title}>{tournament.name}</ThemedText>
-        </View>
-
         <ThemedView style={styles.infoCard}>
           <ThemedText type="defaultSemiBold" style={styles.infoText}>Date: {tournament.date}</ThemedText>
           <ThemedText type="defaultSemiBold" style={styles.infoText}>Location: {tournament.location}</ThemedText>
@@ -103,24 +102,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 12,
-    paddingVertical: 20,
+    paddingVertical: 12,
     backgroundColor: 'transparent'
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20
-  },
-  backButton: {
-    marginRight: 16
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold'
   },
   infoCard: {
     borderRadius: 10,
-    padding: 16,
+    padding: 12,
     marginBottom: 20
   },
   infoText: {
@@ -137,8 +124,8 @@ const styles = StyleSheet.create({
   },
   playerCard: {
     borderRadius: 10,
-    padding: 16,
-    marginBottom: 12,
+    padding: 8,
+    marginBottom: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
