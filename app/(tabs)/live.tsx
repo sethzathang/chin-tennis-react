@@ -2,16 +2,17 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Picker } from '@react-native-picker/picker';
 import React, { useEffect, useState } from 'react';
-import { Alert, Linking, Modal, ScrollView, StyleSheet, TextInput, TouchableOpacity, View, useColorScheme } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Alert, Linking, Modal, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View, useColorScheme } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import liveMockData from '../data/liveMockData.json';
+import { formatDate } from '../utils/dateFormatter';
 
 interface LiveEvent {
   id: number;
   tournament: string;
   match: string;
   url: string;
-  date?: string;
+  date: string;
 }
 
 interface LiveData {
@@ -21,6 +22,7 @@ interface LiveData {
 }
 
 export default function LiveScreen() {
+  const insets = useSafeAreaInsets();
   const [modalVisible, setModalVisible] = useState(false);
   const [liveUrl, setLiveUrl] = useState('');
   const [selectedTournament, setSelectedTournament] = useState('');
@@ -38,8 +40,13 @@ export default function LiveScreen() {
     const fetchData = async () => {
       try {
         // In the future, this will be replaced with a real API call
-        setData(liveMockData as LiveData);
-        setSelectedTournament(liveMockData.tournaments[0]);
+        const mockData = liveMockData as LiveData;
+        // Sort past events by date in descending order (most recent first)
+        mockData.pastEvents.sort((a, b) => 
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        setData(mockData);
+        setSelectedTournament(mockData.tournaments[0]);
       } catch (error) {
         console.error('Error fetching live data:', error);
       }
@@ -47,6 +54,12 @@ export default function LiveScreen() {
 
     fetchData();
   }, []);
+
+  // Calculate bottom padding based on platform and device
+  const bottomPadding = Platform.select({
+    ios: insets.bottom + 55, // Tab bar height (55) + bottom safe area
+    android: 4 // Tab bar height (4) + bottom safe area
+  });
 
   const handleCreateLive = () => {
     if (!liveUrl.startsWith('http')) {
@@ -61,7 +74,11 @@ export default function LiveScreen() {
       id: data.currentLive.length + 1,
       tournament: selectedTournament,
       match: `${player1} vs ${player2}`,
-      date: 'Today',
+      date: new Date().toLocaleDateString('en-US', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric'
+      }),
       url: liveUrl,
     };
     setData(prev => ({
@@ -78,7 +95,7 @@ export default function LiveScreen() {
   const isFormValid = player1.trim() && player2.trim() && liveUrl.trim();
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={styles.safeArea} edges={['top']}>
       <View style={styles.container}>
         <View style={styles.headerRow}>
           <ThemedText type="title" style={styles.header}>Live</ThemedText>
@@ -102,26 +119,24 @@ export default function LiveScreen() {
 
         {/* Past Live Events */}
         <ThemedText type="subtitle" style={styles.sectionTitle}>Past Live Events</ThemedText>
-        <ThemedView style={styles.pastEventsWrapper}>
-          <ScrollView 
-            style={styles.pastEventsScroll} 
-            showsVerticalScrollIndicator={true}
-            contentContainerStyle={styles.pastEventsContent}
-            nestedScrollEnabled={true}
-          >
-            {data.pastEvents.map((data) => (
-                <ThemedView key={data.id} style={styles.pastEventCard}>
-                  <View style={styles.pastEventInfo}>
-                    <ThemedText type="defaultSemiBold" style={styles.pastEventTitle}>{data.tournament}</ThemedText>
-                    <ThemedText type="default" style={styles.pastEventMatch}>{data.match}</ThemedText>
-                  </View>
-                  <TouchableOpacity style={styles.pastEventButton} onPress={() => Linking.openURL(data.url)}>
-                    <ThemedText type="defaultSemiBold" style={styles.pastEventButtonText}>Watch</ThemedText>
-                  </TouchableOpacity>
-                </ThemedView>
-            ))}
-          </ScrollView>
-        </ThemedView>
+        <ScrollView
+          style={styles.pastEventsScroll}
+          showsVerticalScrollIndicator={true}
+          contentContainerStyle={{ paddingBottom: bottomPadding }}
+        >
+          {data.pastEvents.map((event) => (
+            <ThemedView key={event.id} style={styles.pastEventCard}>
+              <View style={styles.pastEventInfo}>
+                <ThemedText type="defaultSemiBold" style={styles.pastEventTitle}>{event.tournament}</ThemedText>
+                <ThemedText type="default" style={styles.pastEventMatch}>{event.match}</ThemedText>
+                <ThemedText type="default" style={styles.pastEventDate}>{formatDate(event.date)}</ThemedText>
+              </View>
+              <TouchableOpacity style={styles.pastEventButton} onPress={() => Linking.openURL(event.url)}>
+                <ThemedText type="defaultSemiBold" style={styles.pastEventButtonText}>Watch</ThemedText>
+              </TouchableOpacity>
+            </ThemedView>
+          ))}
+        </ScrollView>
 
         {/* Modal for creating a live session */}
         <Modal visible={modalVisible} transparent animationType="slide">
@@ -184,7 +199,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 12,
-    paddingVertical: 20,
     backgroundColor: 'transparent'
   },
   headerRow: {
@@ -194,12 +208,22 @@ const styles = StyleSheet.create({
     marginBottom: 16
   },
   header: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'left'
   },
+  createButton: {
+    backgroundColor: '#1877f3',
+    borderRadius: 6,
+    paddingVertical: 10,
+    paddingHorizontal: 24,
+  },
+  createButtonText: {
+    color: '#fff',
+    fontSize: 16
+  },
   liveScroll: {
-    marginBottom: 0 ,
+    marginBottom: 0,
     maxHeight: 150
   },
   liveRow: {
@@ -207,60 +231,54 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingHorizontal: 2
   },
-  liveCard: { 
-    borderRadius: 12, 
-    padding: 20, 
-    marginRight: 12, 
+  liveCard: {
+    borderRadius: 10,
+    padding: 16,
+    marginRight: 12,
     minWidth: 200,
     height: 150,
     justifyContent: 'center',
-    alignItems: 'center',
   },
   liveTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8
   },
   liveMatch: {
     fontSize: 16,
-    marginBottom: 12
+    marginBottom: 4,
+    opacity: 0.7
   },
   liveLabel: {
-    backgroundColor: '#D7263D',
+    backgroundColor: '#ff4444',
+    paddingHorizontal: 8,
     paddingVertical: 4,
-    paddingHorizontal: 12,
-    borderRadius: 50,
+    borderRadius: 4,
+    alignSelf: 'flex-start',
+    marginTop: 8
   },
-  liveLabelText: { 
-    color: '#fff', 
-    fontSize: 14,
-  },
-  createButton: {
-    backgroundColor: '#1877f3',
-    borderRadius: 6,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderWidth: 0,
-    marginLeft: 8
-  },
-  createButtonText: {
+  liveLabelText: {
     color: '#fff',
-    fontSize: 15
+    fontSize: 12,
+    fontWeight: 'bold'
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginVertical: 16,
-    textAlign: 'left',
+    marginTop: 16,
+    marginBottom: 8,
     alignSelf: 'flex-start'
+  },
+  pastEventsScroll: {
+    flex: 1,
   },
   pastEventCard: {
     borderRadius: 10,
     padding: 16,
     marginBottom: 12,
-    flexDirection: 'row', 
-    alignItems: 'center', 
+    flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center'
   },
   pastEventInfo: {
     flex: 1
@@ -270,18 +288,24 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   pastEventMatch: {
-    fontSize: 15
+    fontSize: 14,
+    marginBottom: 4,
+    opacity: 0.7
+  },
+  pastEventDate: {
+    fontSize: 14,
+    opacity: 0.7
   },
   pastEventButton: {
-    backgroundColor: '#D7263D',
-    borderRadius: 15,
+    backgroundColor: '#1877f3',
+    borderRadius: 6,
     paddingVertical: 8,
-    paddingHorizontal: 15,
-    alignSelf: 'flex-end'
+    paddingHorizontal: 16,
+    marginLeft: 12
   },
   pastEventButtonText: {
     color: '#fff',
-    fontSize: 15
+    fontSize: 14
   },
   modalOverlay: {
     flex: 1,
@@ -289,19 +313,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  modalContent: { 
-    borderRadius: 12, 
-    padding: 24, 
-    width: '85%', 
+  modalContent: {
+    borderRadius: 12,
+    padding: 24,
+    width: '85%',
     alignItems: 'center',
   },
-  input: { 
-    width: '100%', 
-    borderWidth: 1, 
-    borderColor: '#e0e0e0', 
-    borderRadius: 6, 
-    padding: 10, 
-    marginBottom: 16, 
+  picker: {
+    width: '100%',
+    marginBottom: 16,
+    color: '#000'
+  },
+  input: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 6,
+    padding: 10,
+    marginBottom: 16,
     fontSize: 16,
   },
   modalButtons: {
@@ -317,25 +346,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     alignItems: 'center'
   },
-  modalButtonText: {
-    color: '#fff',
-    fontSize: 16
-  },
   modalButtonDisabled: {
     opacity: 0.5
   },
-  picker: {
-    width: '100%',
-    marginBottom: 12
-  },
-  pastEventsWrapper: {
-    flex: 1,
-    marginBottom: 0,
-  },
-  pastEventsScroll: {
-    flex: 1,
-  },
-  pastEventsContent: {
-    paddingBottom: 20,
-  },
+  modalButtonText: {
+    color: '#fff',
+    fontSize: 16
+  }
 }); 

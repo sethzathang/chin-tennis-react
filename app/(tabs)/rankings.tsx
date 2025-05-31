@@ -60,10 +60,7 @@ export default function RankingsScreen() {
         <ScrollView 
           style={styles.rankingsList} 
           showsVerticalScrollIndicator={true}
-          contentContainerStyle={[
-            styles.scrollContent,
-            { paddingBottom: bottomPadding }
-          ]}
+          contentContainerStyle={{ paddingBottom: bottomPadding }}
         >
           {data.players.map((player, index) => (
             <ThemedView key={player.id} style={styles.playerRow}>
@@ -116,9 +113,6 @@ const styles = StyleSheet.create({
   },
   rankingsList: {
     flex: 1
-  },
-  scrollContent: {
-    // Base padding, will be overridden by dynamic padding
   },
   playerRow: {
     flexDirection: 'row',

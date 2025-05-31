@@ -1,9 +1,10 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import React, { useEffect, useState } from 'react';
-import { Modal, ScrollView, StyleSheet, TextInput, TouchableOpacity, View, useColorScheme } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Modal, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View, useColorScheme } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import profileMockData from '../data/profileMockData.json';
+import { formatDate } from '../utils/dateFormatter';
 
 interface TournamentPoints {
   id: number;
@@ -28,6 +29,7 @@ interface ProfileData {
 }
 
 export default function ProfileScreen() {
+  const insets = useSafeAreaInsets();
   const [modalVisible, setModalVisible] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -49,9 +51,14 @@ export default function ProfileScreen() {
     const fetchData = async () => {
       try {
         // In the future, this will be replaced with a real API call
-        setData(profileMockData as ProfileData);
-        setFirstName(profileMockData.user.firstName);
-        setLastName(profileMockData.user.lastName);
+        const mockData = profileMockData as ProfileData;
+        // Sort tournament points by date in descending order (most recent first)
+        mockData.user.tournamentPoints.sort((a, b) => 
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        setData(mockData);
+        setFirstName(mockData.user.firstName);
+        setLastName(mockData.user.lastName);
       } catch (error) {
         console.error('Error fetching profile data:', error);
       }
@@ -73,8 +80,14 @@ export default function ProfileScreen() {
     setModalVisible(false);
   };
 
+  // Calculate bottom padding based on platform and device
+  const bottomPadding = Platform.select({
+    ios: insets.bottom + 55, // Tab bar height (55) + bottom safe area
+    android: 4 // Tab bar height (4) + bottom safe area
+  });
+
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={styles.safeArea} edges={['top']}>
       <View style={styles.container}>
         <ThemedText type="title" style={styles.header}>Profile</ThemedText>
         <ThemedView style={styles.profileCard}>
@@ -99,17 +112,18 @@ export default function ProfileScreen() {
 
         {/* Tournament Points History */}
         <ThemedText type="subtitle" style={styles.sectionTitle}>Tournament Points</ThemedText>
-        <ScrollView style={styles.pointsList} showsVerticalScrollIndicator={true}>
+        <ScrollView
+            style={styles.pointsList}
+            showsVerticalScrollIndicator={true}
+            contentContainerStyle={{ paddingBottom: bottomPadding }}
+        >
           {data.user.tournamentPoints.map(point => (
             <ThemedView key={point.id} style={styles.pointsCard}>
               <View style={styles.pointsInfo}>
                 <ThemedText type="defaultSemiBold" style={styles.tournamentName}>{point.tournament}</ThemedText>
-                <ThemedText type="default" style={styles.tournamentDate}>{point.date}</ThemedText>
+                <ThemedText type="default" style={styles.tournamentDate}>{formatDate(point.date)}</ThemedText>
               </View>
-              <View style={styles.pointsDetails}>
-                <ThemedText type="defaultSemiBold" style={styles.pointsValue}>{point.points} pts</ThemedText>
-                <ThemedText type="default" style={styles.rankText}>Rank #{point.rank}</ThemedText>
-              </View>
+              <ThemedText type="defaultSemiBold" style={styles.pointsValue}>{point.points} pts</ThemedText>
             </ThemedView>
           ))}
         </ScrollView>
@@ -157,7 +171,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 12,
-    paddingVertical: 20,
     backgroundColor: 'transparent'
   },
   header: {

@@ -2,32 +2,41 @@
   "user": {
     "firstName": "John",
     "lastName": "Doe",
-    "email": "johndoe@email.com",
-    "avatar": "icon.png",
+    "email": "john.doe@example.com",
+    "avatar": "",
+    "totalPoints": 5250,
+    "overallRank": 12,
     "tournamentPoints": [
       {
         "id": 1,
-        "tournament": "Summer Slam",
-        "points": 1500,
-        "rank": 1,
-        "date": "Jun 10"
+        "tournament": "Summer Championship",
+        "points": 100,
+        "date": "06/15/2024"
       },
       {
         "id": 2,
-        "tournament": "Coastal Classic",
-        "points": 1200,
-        "rank": 3,
-        "date": "Jul 8"
+        "tournament": "Spring Open",
+        "points": 50,
+        "date": "03/20/2024"
       },
       {
         "id": 3,
-        "tournament": "Mountain Masters",
-        "points": 1000,
-        "rank": 5,
-        "date": "Aug 5"
+        "tournament": "Winter Classic",
+        "points": 950,
+        "date": "12/10/2023"
+      },
+      {
+        "id": 4,
+        "tournament": "Fall Tournament",
+        "points": 450,
+        "date": "09/25/2023"
+      },
+      {
+        "id": 5,
+        "tournament": "Summer Slam",
+        "points": 800,
+        "date": "07/15/2023"
       }
-    ],
-    "totalPoints": 3700,
-    "overallRank": 2
+    ]
   }
 } 

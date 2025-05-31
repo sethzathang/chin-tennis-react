@@ -1,14 +1,13 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import tournamentDetailsMockData from './data/tournamentDetailsMockData.json';
 
 interface Player {
-  id: number;
   name: string;
-  rank: number;
   points: number;
 }
 
@@ -29,20 +28,14 @@ export default function TournamentDetailsScreen() {
     const fetchTournamentDetails = async () => {
       try {
         // In the future, this will be replaced with a real API call
-        // For now, we'll use mock data
-        const mockData: TournamentDetails = {
-          id: Number(params.id),
-          name: params.name as string,
-          date: "Jun 10–12",
-          location: "Texas",
-          registeredPlayers: [
-            { id: 1, name: "John Smith", rank: 1, points: 1500 },
-            { id: 2, name: "Mike Johnson", rank: 2, points: 1450 },
-            { id: 3, name: "Sarah Williams", rank: 3, points: 1400 },
-            { id: 4, name: "Emma Davis", rank: 4, points: 1350 },
-            { id: 5, name: "David Lee", rank: 5, points: 1300 },
-          ]
-        };
+        const mockData = tournamentDetailsMockData as TournamentDetails;
+        // Ensure all players have points, defaulting to 0 if undefined
+        mockData.registeredPlayers = mockData.registeredPlayers.map(player => ({
+          ...player,
+          points: player.points ?? 0
+        }));
+        // Sort players by points in descending order
+        mockData.registeredPlayers.sort((a, b) => b.points - a.points);
         setTournament(mockData);
       } catch (error) {
         console.error('Error fetching tournament details:', error);
@@ -79,11 +72,11 @@ export default function TournamentDetailsScreen() {
 
         <ThemedText type="subtitle" style={styles.sectionTitle}>Registered Players</ThemedText>
         <ScrollView style={styles.playersList}>
-          {tournament.registeredPlayers.map((player) => (
-            <ThemedView key={player.id} style={styles.playerCard}>
+          {tournament.registeredPlayers.map((player, index) => (
+            <ThemedView key={index} style={styles.playerCard}>
               <View style={styles.playerInfo}>
                 <ThemedText type="defaultSemiBold" style={styles.playerName}>{player.name}</ThemedText>
-                <ThemedText type="default" style={styles.playerRank}>Rank #{player.rank}</ThemedText>
+                <ThemedText type="default" style={styles.playerRank}>Rank #{index + 1}</ThemedText>
               </View>
               <ThemedText type="defaultSemiBold" style={styles.playerPoints}>{player.points} pts</ThemedText>
             </ThemedView>
@@ -137,12 +130,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 4
   },
-  playerRank: {
-    fontSize: 14,
-    opacity: 0.7
-  },
   playerPoints: {
     fontSize: 16,
     color: '#4CAF50'
+  },
+  playerRank: {
+    fontSize: 12,
+    color: '#999'
   }
 }); 

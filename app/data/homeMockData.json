@@ -2,73 +2,62 @@
   "upcomingTournaments": [
     {
       "id": 1,
-      "name": "Summer Slam",
+      "name": "Chin Masters Cup",
       "date": "Jun 10–12",
-      "location": "Texas"
+      "location": "Indiana"
     },
     {
       "id": 2,
-      "name": "Coastal Classic",
+      "name": "Rual U Open",
       "date": "Jul 8–10",
-      "location": "California"
+      "location": "Indiana"
     },
     {
       "id": 3,
-      "name": "Mountain Masters",
+      "name": "Colorado Open",
       "date": "Aug 5–7",
-      "location": "Oklahoma"
+      "location": "Colorado"
+    },
+    {
+      "id": 4,
+      "name": "Dallas Open",
+      "date": "Sep 15",
+      "location": "Texas"
     }
   ],
   "tournamentImages": [
     {
       "id": 1,
-      "url": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0",
-      "caption": "Championship Match - Summer Slam 2023"
+      "name": "Summer Slam 2023",
+      "images": [
+        { "url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb" },
+        { "url": "https://images.unsplash.com/photo-1467269204594-9661b134dd2b" },
+        { "url": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca" },
+        { "url": "https://images.unsplash.com/photo-1469474968028-56623f02e42e" },
+        { "url": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429" }
+      ]
     },
     {
       "id": 2,
-      "url": "https://images.unsplash.com/photo-1622279457486-62f3f759e682",
-      "caption": "Tournament Finals - Coastal Classic"
+      "name": "Coastal Classic 2023",
+      "images": [
+        { "url": "https://images.unsplash.com/photo-1469122312224-c5846569feb1" },
+        { "url": "https://images.unsplash.com/photo-1465447142348-e9952c393450" },
+        { "url": "https://images.unsplash.com/photo-1468581264429-2548ef9eb732" },
+        { "url": "https://images.unsplash.com/photo-1464983953574-0892a716854b" },
+        { "url": "https://images.unsplash.com/photo-1467269204594-9661b134dd2b" }
+      ]
     },
     {
       "id": 3,
-      "url": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0",
-      "caption": "Semi-Finals Action - Mountain Masters"
-    },
-    {
-      "id": 4,
-      "url": "https://images.unsplash.com/photo-1622279457486-62f3f759e682",
-      "caption": "Tournament Opening Ceremony"
-    },
-    {
-      "id": 5,
-      "url": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0",
-      "caption": "Quarter Finals - Summer Slam"
-    },
-    {
-      "id": 6,
-      "url": "https://images.unsplash.com/photo-1622279457486-62f3f759e682",
-      "caption": "Doubles Championship"
-    },
-    {
-      "id": 7,
-      "url": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0",
-      "caption": "Junior Division Finals"
-    },
-    {
-      "id": 8,
-      "url": "https://images.unsplash.com/photo-1622279457486-62f3f759e682",
-      "caption": "Mixed Doubles Championship"
-    },
-    {
-      "id": 9,
-      "url": "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0",
-      "caption": "Senior Division Finals"
-    },
-    {
-      "id": 10,
-      "url": "https://images.unsplash.com/photo-1622279457486-62f3f759e682",
-      "caption": "Tournament Awards Ceremony"
+      "name": "Mountain Masters 2023",
+      "images": [
+        { "url": "https://images.unsplash.com/photo-1464983953574-0892a716854b" },
+        { "url": "https://images.unsplash.com/photo-1467269204594-9661b134dd2b" },
+        { "url": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca" },
+        { "url": "https://images.unsplash.com/photo-1465447142348-e9952c393450" },
+        { "url": "https://images.unsplash.com/photo-1469474968028-56623f02e42e" }
+      ]
     }
   ]
 } 

@@ -2,8 +2,8 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {Alert, Platform, ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import tournamentsMockData from '../data/tournamentsMockData.json';
 
 interface Tournament {
@@ -20,6 +20,7 @@ interface TournamentsData {
 }
 
 export default function TournamentsScreen() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
   const [data, setData] = useState<TournamentsData>({
     tournaments: []
@@ -50,11 +51,20 @@ export default function TournamentsScreen() {
     });
   };
 
+  // Calculate bottom padding based on platform and device
+  const bottomPadding = Platform.select({
+    ios: insets.bottom + 55, // Tab bar height (55) + bottom safe area
+    android: 4 // Tab bar height (4) + bottom safe area
+  });
+
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={styles.safeArea} edges={['top']}>
       <View style={styles.container}>
         <ThemedText type="title" style={styles.header}>Tournaments</ThemedText>
-        <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+        <ScrollView
+            contentContainerStyle={[styles.scrollContainer, { paddingBottom: bottomPadding }]}
+            showsVerticalScrollIndicator={false}
+        >
           {data.tournaments.map((t) => (
             <ThemedView key={t.id} style={styles.card}>
               <ThemedText type="defaultSemiBold" style={styles.tournamentName}>{t.name}</ThemedText>
@@ -83,7 +93,7 @@ export default function TournamentsScreen() {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: 'transparent' },
-  container: { flex: 1, paddingHorizontal: 12, paddingVertical: 20, backgroundColor: 'transparent' },
+  container: { flex: 1, paddingHorizontal: 12, backgroundColor: 'transparent' },
   scrollContainer: { flexGrow: 1 },
   header: { fontSize: 32, fontWeight: 'bold', marginBottom: 16 },
   card: { 
