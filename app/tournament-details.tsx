@@ -3,7 +3,6 @@ import { ThemedView } from '@/components/ThemedView';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import tournamentDetailsMockData from './data/tournamentDetailsMockData.json';
 
 interface Player {
@@ -45,25 +44,27 @@ export default function TournamentDetailsScreen() {
     fetchTournamentDetails();
   }, [params.id, params.name]);
 
+  //Place this at the very top
+  Stack.Screen({
+    options: {
+      title: "Tournament Details",
+      headerBackTitle: "Back",
+      headerShown: true
+    }
+  });
+
   if (!tournament) {
     return (
-      <SafeAreaView style={styles.safeArea}>
+      <View style={styles.safeArea}>
         <View style={styles.container}>
           <ThemedText type="title">Loading...</ThemedText>
         </View>
-      </SafeAreaView>
+      </View>
     );
   }
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <Stack.Screen
-        options={{
-          title: "Tournament Details",
-          headerBackTitle: "Back",
-          headerShown: true
-        }}
-      />
+    <View style={styles.safeArea}>
       <View style={styles.container}>
         <ThemedView style={styles.infoCard}>
           <ThemedText type="defaultSemiBold" style={styles.infoText}>Date: {tournament.date}</ThemedText>
@@ -83,7 +84,7 @@ export default function TournamentDetailsScreen() {
           ))}
         </ScrollView>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -94,8 +95,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingHorizontal: 12,
-    paddingVertical: 12,
+    padding: 12,
     backgroundColor: 'transparent'
   },
   infoCard: {
