@@ -38,6 +38,9 @@ The Chin Tennis Tournaments Mobile App centralizes tournament information for th
    * Shows the user’s current ranking.
    * Displays a list of tournaments the user has joined.
 
+## Demo Video - mock data (haven't hooked it up with the database)
+https://github.com/user-attachments/assets/1e271b1d-a46e-45d0-b9fa-fdef7f3d0def
+
 ## ⚙️ Technical Stack
 - React Native 0.79.2
 - Expo 53.0.9
