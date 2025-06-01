@@ -1,50 +1,50 @@
-# Welcome to your Expo app 👋
+# Chin Community Tennis Tournament Mobile App 
+A cross-platform mobile application built with React Native and Expo, designed to provide an intuitive and seamless experience for both iOS and Android users. 
+The app helps the Chin community organize, participate in, and follow regional tennis tournaments across multiple U.S. states.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## 📝 App Summary
+The Chin Tennis Tournaments Mobile App centralizes tournament information for the Chin community, making it easier for players and fans to stay up to date on upcoming matches, player rankings, and live streams. With features tailored for both participants and organizers, the app supports tournament creation, player tracking, live match viewing, and user profiles.
 
-## Get started
+## 📱App Overview
+* **🏠 Home Screen**
+   * Displays upcoming tennis tournaments using horizontal CardView components.
+   * Shows photos from past tournaments in a vertical scrollable CardView.
+     * Tapping a tournament photo opens a modal with additional images from that event.
 
-1. Install dependencies
+* **🏅 Rankings Screen**
+   * Lists all registered players along with their current rankings.
+   * Rankings are automatically updated when player scores change.
 
-   ```bash
-   npm install
-   ```
+* **🏆 Tournaments Screen**
+   * Allows verified tournament organizers to create new tournaments.
+   * Shows a list of tournaments created by the logged-in user.
+   * A Join button is visible only to users who:
+     * Have not already joined the tournament.
+     * Can see the tournament has been marked as "started" by the organizer.
+   * Allow a user to view the tournament details
+ 
+* **📄 Tournaments Details Screen**
+  * Displays complete tournament information:
+    * Location 
+    * Date 
+    * List of players
 
-2. Start the app
+* **🎥 Live Screen**
+   * Lets users watch live matches.
+   * Users can share the live match link via Facebook.
 
-   ```bash
-   npx expo start
-   ```
+* **👤 Profile Screen**
+   * Allows users to update their display name.
+   * Shows the user’s current ranking.
+   * Displays a list of tournaments the user has joined.
 
-In the output, you'll find options to open the app in a
+## ⚙️ Technical Stack
+- React Native 0.79.2
+- Expo 53.0.9
+- TypeScript 5.8.3
+- React Navigation 7
+- Additional Expo modules for camera, file system access, and more
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 📚Learn More
+- [Expo Documentation](https://docs.expo.dev/)
+- [React Native Documentation](https://reactnative.dev/)
