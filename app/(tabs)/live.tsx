@@ -1,5 +1,6 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { FontAwesome } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import React, { useEffect, useState } from 'react';
 import { Alert, Linking, Modal, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View, useColorScheme } from 'react-native';
@@ -100,6 +101,7 @@ export default function LiveScreen() {
         <View style={styles.headerRow}>
           <ThemedText type="title" style={styles.header}>Live</ThemedText>
           <TouchableOpacity style={styles.createButton} onPress={() => setModalVisible(true)}>
+            <FontAwesome name="camera" size={20} color="#fff" style={{ marginRight: 8 }} />
             <ThemedText type="defaultSemiBold" style={styles.createButtonText}>Go Live</ThemedText>
           </TouchableOpacity>
         </View>
@@ -176,11 +178,16 @@ export default function LiveScreen() {
                 placeholderTextColor="#888"
               />
               <View style={styles.modalButtons}>
-                <TouchableOpacity style={[styles.modalButton, !isFormValid && styles.modalButtonDisabled]} onPress={handleCreateLive} disabled={!isFormValid}>
-                  <ThemedText type="defaultSemiBold" style={styles.modalButtonText}>Save</ThemedText>
+                <TouchableOpacity
+                    style={[styles.modalButton, !isFormValid && styles.modalButtonDisabled, {backgroundColor: 'green'}]}
+                    onPress={handleCreateLive}
+                    disabled={!isFormValid}
+                ><ThemedText type="defaultSemiBold" style={styles.modalButtonText}>Go</ThemedText>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.modalButton} onPress={() => setModalVisible(false)}>
-                  <ThemedText type="defaultSemiBold" style={styles.modalButtonText}>Cancel</ThemedText>
+                <TouchableOpacity
+                    style={[styles.modalButton, {backgroundColor: '#ff4444'}]}
+                    onPress={() => setModalVisible(false)}
+                ><ThemedText type="defaultSemiBold" style={styles.modalButtonText}>Cancel</ThemedText>
                 </TouchableOpacity>
               </View>
             </ThemedView>
@@ -208,15 +215,19 @@ const styles = StyleSheet.create({
     marginBottom: 16
   },
   header: {
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'left'
   },
   createButton: {
-    backgroundColor: '#1877f3',
-    borderRadius: 6,
-    paddingVertical: 10,
-    paddingHorizontal: 24,
+    backgroundColor: '#4CAF50',
+    borderRadius: 25,
+    width: 'auto',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 20,
   },
   createButtonText: {
     color: '#fff',

@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: 'transparent' },
   container: { flex: 1, paddingHorizontal: 12, backgroundColor: 'transparent' },
   scrollContainer: { flexGrow: 1 },
-  header: { fontSize: 32, fontWeight: 'bold', marginBottom: 16 },
+  header: { fontSize: 24, fontWeight: 'bold', marginBottom: 16 },
   card: { 
     borderRadius: 10, 
     padding: 16, 

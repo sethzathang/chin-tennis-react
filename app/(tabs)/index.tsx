@@ -62,7 +62,7 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <View style={styles.container}>
-        <ThemedText type="title" style={styles.header}>Home</ThemedText>
+        <ThemedText type="title" style={styles.header}>Chin Tennis</ThemedText>
         
         {/* Upcoming Tournaments */}
         <ThemedText type="subtitle" style={styles.sectionTitle}>Upcoming Tournaments</ThemedText>
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
   header: {
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16
   },
