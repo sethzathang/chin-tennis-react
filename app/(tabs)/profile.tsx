@@ -174,9 +174,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
   header: {
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 16
+    marginBottom: 16,
+    textAlign: 'center'
   },
   profileCard: { 
     borderRadius: 10, 
