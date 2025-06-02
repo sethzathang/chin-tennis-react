@@ -1,19 +1,9 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import React, { useEffect, useState } from 'react';
-import { Image, Modal, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import homeMockData from '../data/homeMockData.json';
-
-interface TournamentImage {
-  url: string;
-}
-
-interface TournamentGallery {
-  id: number;
-  name: string;
-  images: TournamentImage[];
-}
 
 interface HomeData {
   upcomingTournaments: {
@@ -22,17 +12,13 @@ interface HomeData {
     date: string;
     location: string;
   }[];
-  tournamentImages: TournamentGallery[];
 }
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const [data, setData] = useState<HomeData>({
-    upcomingTournaments: [],
-    tournamentImages: []
+    upcomingTournaments: []
   });
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedTournament, setSelectedTournament] = useState<TournamentGallery | null>(null);
 
   useEffect(() => {
     // Simulating API fetch
@@ -44,7 +30,6 @@ export default function HomeScreen() {
         console.error('Error fetching home data:', error);
       }
     };
-
     fetchData();
   }, []);
 
@@ -53,11 +38,6 @@ export default function HomeScreen() {
     ios: insets.bottom + 55, // Tab bar height (55) + bottom safe area
     android: 6 // Tab bar height (55) + bottom safe area
   });
-
-  const handleImagePress = (tournament: TournamentGallery) => {
-    setSelectedTournament(tournament);
-    setModalVisible(true);
-  };
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
@@ -76,53 +56,22 @@ export default function HomeScreen() {
           ))}
         </ScrollView>
 
-        {/* Tournament Images */}
-        <ThemedText type="subtitle" style={styles.sectionTitle}>Tournament Gallery</ThemedText>
+        <ThemedText type="subtitle" style={styles.sectionTitle}>Important Announcements</ThemedText>
         <ScrollView
-            style={styles.imagesScroll}
+            style={styles.announcementScroll}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: bottomPadding }}
-        >
-          {data.tournamentImages.map((tournament) => (
-            <TouchableOpacity 
-              key={tournament.id} 
-              style={styles.imageCard}
-              onPress={() => handleImagePress(tournament)}
-            >
-              <Image source={{ uri: tournament.images[0].url }} style={styles.tournamentImage} />
-              <ThemedText type="default" style={styles.imageCaption}>{tournament.name}</ThemedText>
-            </TouchableOpacity>
-          ))}
+            contentContainerStyle={{ paddingBottom: bottomPadding }}>
+          <ThemedText type="default" style={{ backgroundColor: '#fff', padding: 12}}>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+            It was popularised in the 1960s with the release of enetreset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+            It was popularised in the 1960s with the release of enetreset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          </ThemedText>
         </ScrollView>
-
-        {/* Image Gallery Modal */}
-        <Modal
-          visible={modalVisible}
-          transparent={true}
-          animationType="fade"
-          onRequestClose={() => setModalVisible(false)}
-        >
-          <View style={styles.modalOverlay}>
-            <ThemedView style={styles.modalContent}>
-              <View style={styles.modalHeader}>
-                <TouchableOpacity onPress={() => setModalVisible(false)}>
-                  <ThemedText type="defaultSemiBold" style={styles.closeButton}>Close</ThemedText>
-                </TouchableOpacity>
-              </View>
-              <ScrollView
-                style={styles.modalScroll}
-                showsVerticalScrollIndicator={true}
-                contentContainerStyle={{ paddingBottom: bottomPadding }}
-              >
-                {selectedTournament?.images.map((image, index) => (
-                  <View key={index} style={styles.modalImageContainer}>
-                    <Image source={{ uri: image.url }} style={styles.modalImage} />
-                  </View>
-                ))}
-              </ScrollView>
-            </ThemedView>
-          </View>
-        </Modal>
       </View>
     </SafeAreaView>
   );
@@ -181,56 +130,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     opacity: 0.7
   },
-  imagesScroll: {
+  announcementScroll: {
     flex: 1,
-  },
-  imageCard: {
-    borderRadius: 10,
-    marginBottom: 16,
-    overflow: 'hidden',
-  },
-  tournamentImage: {
-    width: '100%',
-    height: 200,
-    borderRadius: 10,
-  },
-  imageCaption: {
-    fontSize: 14,
-    marginTop: 8,
-    opacity: 0.7,
-    textAlign: 'center',
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.7)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    width: '90%',
-    height: '80%',
-    borderRadius: 12,
-    padding: 16,
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  closeButton: {
-    fontSize: 16,
-    color: '#1877f3',
-  },
-  modalScroll: {
-    flex: 1,
-  },
-  modalImageContainer: {
-    marginBottom: 16,
-  },
-  modalImage: {
-    width: '100%',
-    height: 250,
-    borderRadius: 10,
-  },
+  }
 });

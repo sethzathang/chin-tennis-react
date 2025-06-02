@@ -24,40 +24,5 @@
       "date": "Sep 15",
       "location": "Texas"
     }
-  ],
-  "tournamentImages": [
-    {
-      "id": 1,
-      "name": "Summer Slam 2023",
-      "images": [
-        { "url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb" },
-        { "url": "https://images.unsplash.com/photo-1467269204594-9661b134dd2b" },
-        { "url": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca" },
-        { "url": "https://images.unsplash.com/photo-1469474968028-56623f02e42e" },
-        { "url": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429" }
-      ]
-    },
-    {
-      "id": 2,
-      "name": "Coastal Classic 2023",
-      "images": [
-        { "url": "https://images.unsplash.com/photo-1469122312224-c5846569feb1" },
-        { "url": "https://images.unsplash.com/photo-1465447142348-e9952c393450" },
-        { "url": "https://images.unsplash.com/photo-1468581264429-2548ef9eb732" },
-        { "url": "https://images.unsplash.com/photo-1464983953574-0892a716854b" },
-        { "url": "https://images.unsplash.com/photo-1467269204594-9661b134dd2b" }
-      ]
-    },
-    {
-      "id": 3,
-      "name": "Mountain Masters 2023",
-      "images": [
-        { "url": "https://images.unsplash.com/photo-1464983953574-0892a716854b" },
-        { "url": "https://images.unsplash.com/photo-1467269204594-9661b134dd2b" },
-        { "url": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca" },
-        { "url": "https://images.unsplash.com/photo-1465447142348-e9952c393450" },
-        { "url": "https://images.unsplash.com/photo-1469474968028-56623f02e42e" }
-      ]
-    }
   ]
 } 
